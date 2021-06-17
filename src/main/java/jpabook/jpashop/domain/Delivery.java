@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+import static javax.persistence.FetchType.*;
+
 @Entity
 @Getter
 @Setter
@@ -19,7 +21,7 @@ public class Delivery {
     fk 를 order 에 두어도 되고 delivery 에 두어도 된다.
     order 에 fk 에 둔다면, order table 의 delivery 가 연관관계 주인이다.
      */
-    @OneToOne(mappedBy = "delivery")
+    @OneToOne(mappedBy = "delivery", fetch = LAZY)
     private Order order;
 
     @Embedded

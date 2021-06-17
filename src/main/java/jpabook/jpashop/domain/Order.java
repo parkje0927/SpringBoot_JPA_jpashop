@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Table(name = "orders")
 @Getter
@@ -22,14 +24,30 @@ public class Order {
     어떤 값이 변경되었을 때 foreign key(fk) 를 바꿀 것이라고 지정해주면 되는데 그게 연관관계의 주인이다.
     order 에 member_id 라는 fk 가 있으므로 이를 연관관계의 주인이다.
      */
-    @ManyToOne //다대일의 관계
+    @ManyToOne(fetch = LAZY) //다대일의 관계
     @JoinColumn(name = "member_id") //mapping 을 무엇을 할 것인지
     private Member member;
 
-    @OneToMany(mappedBy = "order")
+    //eager 타입일 경우
+    //JPQL select o from order o; -> select * from order
+    //query 가 100개면 100 + 1(처음 쿼리) 개의 쿼리가 날아가는 것이다.
+
+    /*
+    cascade 없으면,
+    persist(orderItemA)
+    persist(orderItemB)
+    persist(orderItemC)
+    persist(order)
+    이렇게 따로 해야하는데
+
+    cascade 가 있는 경우,
+    order 저장 시 , orderItem, delivery 도 같이 persist 된다.
+    p
+     */
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne
+    @OneToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "delivery_id")
     private Delivery delivery;
 
@@ -39,7 +57,19 @@ public class Order {
     @Enumerated(EnumType.STRING)
     private OrderStatus status; //주문상태 [ORDER, CANCEL]
 
+    //==연관관계 메서드==//
+    public void setMember(Member member) {
+        this.member = member;
+        member.getOrders().add(this);
+    }
 
+    public void addOrderItem(OrderItem orderItem) {
+        orderItems.add(orderItem);
+        orderItem.setOrder(this);
+    }
 
-
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+        delivery.setOrder(this);
+    }
 }
