@@ -68,6 +68,7 @@ public class MemberServiceTest {
     }
 }
 
+
 /**
  * RunWith(SpringRunner.class) : 스프링과 테스트 통합
  * SpringBootTest : 스프링 부트 띄우고 테스트(이게 없으면 @Autowired 다 실패)
@@ -75,7 +76,8 @@ public class MemberServiceTest {
  * 가 끝나면 트랜잭션을 강제로 롤백 (이 어노테이션이 테스트 케이스에서 사용될 때만 롤백)
  */
 
-/*
+
+/**
  * 테스트 케이스를 위한 설정
  * 테스트는 케이스 격리된 환경에서 실행하고, 끝나면 데이터를 초기화 하는 것이 좋다.
  * 그런 면에서 메모리 DB를 사용하는 것이 가장 이상적이다.
