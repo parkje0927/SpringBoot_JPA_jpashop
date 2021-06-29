@@ -1,0 +1,20 @@
+spring:
+#  datasource:
+#    url: jdbc:h2:mem:test # 메모리 모드로 띄울 수 있도록 지원
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#
+#  jpa:
+#    hibernate:
+#      ddl-auto: create-drop  # 자동으로 TABLE 만들어 줌
+#    properties:
+#      hibernate:
+##        show-sql: true
+#        format-sql: true
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+    # 쿼리 파라미터 로그 남기기
+#    org.hibernate.type: trace

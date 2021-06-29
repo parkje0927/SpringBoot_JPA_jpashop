@@ -19,7 +19,8 @@ public class MemberRepository {
         em.persist(member);
         // 저장하고 나면 command, query 를 분리하라
         // Id 정도만 조회
-        //영속성 context 에 pk 값이 들어간다.
+        // 영속성 context 에 pk 값이 들어간다.
+        // persist 를 한다고 db에 insert 가 되는 것은 아니다.
 //        return member.getId();
     }
 
