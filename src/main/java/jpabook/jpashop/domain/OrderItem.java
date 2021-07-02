@@ -1,7 +1,9 @@
 package jpabook.jpashop.domain;
 
 import jpabook.jpashop.domain.item.Item;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -10,6 +12,9 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
+// 예시로, OrderService 에서 OrderItem 객체를 선언해서 주문상품을 생성하려는 시도를 막기 위함
+// protected level 의 생성자를 만들어주거나 다음과 같은 lombok 을 활용
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
     @Id
