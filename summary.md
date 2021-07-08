@@ -32,7 +32,7 @@
   + 즉시로딩(eager) : member 조회 시 order 테이블도 다 조회되는 것인데, 즉시 로딩은 예측이 어렵고, 어떤 SQL이 실행될 지 추적하기 어렵다. 특히 JPQL을 실행할 때 N+1 문제가 자주 발생한다.
   + JPQL select o from order o; -> select * from order -> query 가 100개면 100 + 1(처음 쿼리) 개의 쿼리가 날아가는 것이다. 
   + 실무에서 모든 연관관계는 지연로딩(LAZY)으로 설정해야 한다.
-  + 연관된 엔티티를 함께 DB에서 조회해야 하면, fetch join 또는 엔티티 그래프 기능을 사용한다.
+  + 연관된 엔티티를 함께 DB 에서 조회해야 하면, fetch join 또는 엔티티 그래프 기능을 사용한다.
   + @XToOne(OneToOne, ManyToOne) 관계는 기본이 즉시로딩이므로 직접 지연로딩으로 설정해야 한다.
   
 - 컬렉션은 필드에서 초기화 하자.
@@ -81,3 +81,24 @@
 
 ### test
 - 실무에서는 '단위 테스트'를 진행하는 것이 좋다.
+
+### 타임리프
+- th:field = "*{city}" => 이렇게 작성시, name=city, id=city 가 생성된다.
+
+<hr>
+
+### 예외처리 방법
+- build.gradle/implementation 'org.springframework.boot:spring-boot-starter-validation'
+- @NotNull
+  + null 만 허용하지 않음
+  + "" 이나 " " 은 허용
+  + null 이 들어오게 되면, 로직에 예상치 못한 오류가 발생하거나 문제가 생길 경우 사용
+  + @Size(min = , max = , message = " ") 를 통해 최소, 최대 사이즈를 지정 가능
+  
+- @NotEmpty
+  + null, "" 둘 다 허용하지 않음
+  
+- @NotBlank
+  + null, "", " " 모두 허용하지 않음
+  
+
