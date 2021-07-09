@@ -23,7 +23,7 @@ public class ItemRepository {
         if (item.getId() == null) {
             em.persist(item);
         } else {
-            // 이는 update 와 유사하다. 이후 더 설명 추가할 예정
+            //이는 update 와 유사하다. 이후 더 설명 추가할 예정
             //item 은 영속성 컨텍스트에서 관리되는 것은 아니고 merge 의 결과가 영속성 컨텍스트로 관리된다.
             //item 은 파라미터 역할이다.
             em.merge(item);
