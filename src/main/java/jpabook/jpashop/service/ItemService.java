@@ -20,6 +20,19 @@ public class ItemService {
         itemRepository.save(item);
     }
 
+    /**
+     * 변경 감지
+     */
+    @Transactional
+    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
+        Item findItem = itemRepository.findOne(itemId);
+//        findItem.change(name, price, stockQuantity); // 아래와 같이 setter 를 사용하는 것보다 이와 같이 메서드를 만드는 것이 더 낫다.
+        findItem.setPrice(price);
+        findItem.setName(name);
+        findItem.setStockQuantity(stockQuantity);
+        //transaction 이 commit 한다. -> Flush -> 변경된 것을 감지해서 update query 를 날린다.
+    }
+
     public List<Item> findItems() {
         return itemRepository.findAll();
     }
