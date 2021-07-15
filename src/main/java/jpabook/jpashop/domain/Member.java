@@ -16,6 +16,7 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
+//    @NotEmpty //apiV2 로 변경하면서 삭제
     private String name;
 
     @Embedded
