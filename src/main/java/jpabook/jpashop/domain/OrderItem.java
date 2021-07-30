@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jpabook.jpashop.domain.item.Item;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class OrderItem {
     한 order 가 여러 개의 orderItem 을 가질 수 있으므로
     order : orderItem => 일대다
      */
+    @JsonIgnore // 간단한 주문 조회 V1 에서 추가
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "order_id")
     private Order order;

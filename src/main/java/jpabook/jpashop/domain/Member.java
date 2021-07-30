@@ -1,5 +1,6 @@
 package jpabook.jpashop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,7 @@ public class Member {
 
     //컬렉션은 변경하지 말고 그대로 사용하기 => hibernate 가 컬렉션을 관리하므로 필드에서 초기화하는 것이 좋다.
     @OneToMany(mappedBy = "member")
+    @JsonIgnore // 간단한 주문 조회 V1 에서 추가
     private List<Order> orders = new ArrayList<>();
 
 }
