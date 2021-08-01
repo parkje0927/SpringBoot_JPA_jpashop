@@ -79,7 +79,7 @@ public class OrderSimpleApiController {
      *
      * 처음에 order 조회하면 -> sql 1번 실행해서 -> 결과 주문 수가 2개가 나온다.
      * 그러면 loop 도는 곳에서 2번 돈다.
-     * 그러므로 총 5번 돈다. 
+     * 그러므로 총 5번 돈다.
      *
      */
     @GetMapping("/api/v2/simple-orders")
