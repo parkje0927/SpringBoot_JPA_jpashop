@@ -109,4 +109,13 @@ public class OrderSimpleApiController {
             address = order.getDelivery().getAddress(); //LAZY 초기화
         }
     }
+
+    /**
+     * V3. 엔티티를 조회해서 DTO 로 변환(fetch join 사용 O)
+     * - fetch join 으로 쿼리 1번 호출
+     * 참고 : fetch join 에 대한 자세한 내용은 JPA 기본편 참고 (정말 중요함)
+     *
+     * 엔티티를 fetch join 을 사용해서 쿼리 1번에 조회
+     * 페치 조인으로 order -> member, order -> delivery 는 이미 조회된 상태이므로 지연 로딩 X
+     */
 }
