@@ -93,6 +93,26 @@ public class OrderSimpleApiController {
         return result;
     }
 
+    /**
+     * V3. 엔티티를 조회해서 DTO 로 변환(fetch join 사용 O)
+     * - fetch join 으로 쿼리 1번 호출
+     * 참고 : fetch join 에 대한 자세한 내용은 JPA 기본편 참고 (정말 중요함)
+     *
+     * 엔티티를 fetch join 을 사용해서 쿼리 1번에 조회
+     * fetch join 으로 order -> member, order -> delivery 는 이미 조회된 상태이므로 지연 로딩 X
+     *
+     * 실무에서 jpa 사용하려면 fetch join 무조건 이해해야 함!
+     * 다 lazy 로 만들고 필요한 것만 fetch join 으로 가져오면 대부분의 문제가 해결 된다.
+     */
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> orderV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+        List<SimpleOrderDto> result = orders.stream()
+                .map(o -> new SimpleOrderDto(o))
+                .collect(Collectors.toList());
+        return result;
+    }
+
     @Data
     static class SimpleOrderDto {
         private Long orderId;
@@ -109,13 +129,4 @@ public class OrderSimpleApiController {
             address = order.getDelivery().getAddress(); //LAZY 초기화
         }
     }
-
-    /**
-     * V3. 엔티티를 조회해서 DTO 로 변환(fetch join 사용 O)
-     * - fetch join 으로 쿼리 1번 호출
-     * 참고 : fetch join 에 대한 자세한 내용은 JPA 기본편 참고 (정말 중요함)
-     *
-     * 엔티티를 fetch join 을 사용해서 쿼리 1번에 조회
-     * 페치 조인으로 order -> member, order -> delivery 는 이미 조회된 상태이므로 지연 로딩 X
-     */
 }
