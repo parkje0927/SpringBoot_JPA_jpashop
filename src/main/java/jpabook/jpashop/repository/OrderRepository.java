@@ -107,5 +107,16 @@ public class OrderRepository {
         ).getResultList();
     }
 
+    /**
+     * V4
+     */
+    public List<OrderSimpleQueryDto> findOrderDtos() {
+        return em.createQuery(
+                "select o from Order o" +
+                        " join o.member m" +
+                        " join o.delivery d", OrderSimpleQueryDto.class
+        ).getResultList();
+    }
+
     // 가장 좋은 방법) Querydsl
 }
