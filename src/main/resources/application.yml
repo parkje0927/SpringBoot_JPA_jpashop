@@ -11,7 +11,7 @@ spring:
 #      ddl-auto: none  # 테이블을 drop 하거나 이러지 않고 데이터를 넣어두면 그대로 사용가능
     properties:
       hibernate:
-#        show-sql: true
+        show-sql: true
         format-sql: true
 
 logging:
