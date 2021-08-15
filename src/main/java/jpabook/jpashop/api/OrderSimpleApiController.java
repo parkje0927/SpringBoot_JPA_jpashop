@@ -137,10 +137,14 @@ public class OrderSimpleApiController {
      * V4. JPA 에서 DTO 로 바로 조회
      * - 쿼리 1번 호출
      * - select 절에서 원하는 데이터만 선택해서 조회
+     *
+     * V3 와 V4 는 우열을 가리기가 어렵다.
+     * V3 : 외부의 모습을 건들이지 않고 내부에 원하는 것만 fetch join. 재사용성이 높음.
+     * V4 : 쿼리를 한 번 할 때 JPQL 을 짜서 가져옴. 재사용성이 떨어짐. V3 보다는 성능 최적화가 낮음.
      */
     @GetMapping("/api/v4/simple-orders")
     public List<OrderSimpleQueryDto> ordersV4() {
-        return orderRepository.findOrderDtos();
+        return orderSimpleQueryRepository.findOrderDtos();
     }
 
 }
