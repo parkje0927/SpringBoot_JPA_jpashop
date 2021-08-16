@@ -5,8 +5,8 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
 import jpabook.jpashop.repository.OrderSearch;
-import jpabook.jpashop.repository.OrderSimpleQueryDto;
-import jpabook.jpashop.repository.order.OrderSimpleQueryRepository;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryDto;
+import jpabook.jpashop.repository.order.simplequery.OrderSimpleQueryRepository;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -141,10 +141,27 @@ public class OrderSimpleApiController {
      * V3 와 V4 는 우열을 가리기가 어렵다.
      * V3 : 외부의 모습을 건들이지 않고 내부에 원하는 것만 fetch join. 재사용성이 높음.
      * V4 : 쿼리를 한 번 할 때 JPQL 을 짜서 가져옴. 재사용성이 떨어짐. V3 보다는 성능 최적화가 낮음.
+     *
+     * - 일반적인 SQL 을 사용할 때처럼 원하는 값을 선택해서 조회
+     * - new 명령어를 사용해서 JPQL 의 결과를 DTO 로 즉시 변환
+     * - select 절에서 원하는 데이터를 직접 선택하므로 DB -> 애플리케이션 네트워크 용량 최적화(생각보다 미비함)
+     * - 리포지토리 재사용성 떨어짐. API 스펙에 맞춘 코드가 리포지토리에 들어가는 단점
+     *
+     * 정리
+     * 엔티티를 DTO 로 변환하거나, DTO 로 바로 조회하는 두 가지 방법은 각각 장단점이 있다.
+     * 둘 중 상황에 따라서 더 나은 방법을 선택하면 된다.
+     * 엔티티로 조회하면 리포지토리 재사용성도 좋고, 개발도 단순해진다.
+     * 리포지토리는 엔티티 조회할 때 사용하기!
+     * 따라서 권장하는 방법은 다음과 같다.
+     *
+     * [ 쿼리 방식 선택 권장 순서 ]
+     * 1. 우선 엔티티를 DTO 로 변환하는 방법을 선택한다.
+     * 2. 필요하면 fetch join 으로 성능을 최적화한다. => 대부분의 성능 이슈가 해결되다.
+     * 3. 그래도 안되면 DTO 로 직접 조회하는 방법을 사용한다.
+     * 4. 최후이 방법은 JPA 가 제공하는 네이티브 SQL 이나 스프링 JDBC Template 을 사용해서 SQL 을 직접 사용한다.
      */
     @GetMapping("/api/v4/simple-orders")
     public List<OrderSimpleQueryDto> ordersV4() {
         return orderSimpleQueryRepository.findOrderDtos();
     }
-
 }
