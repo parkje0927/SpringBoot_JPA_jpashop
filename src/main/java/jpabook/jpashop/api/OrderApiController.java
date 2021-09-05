@@ -44,4 +44,30 @@ public class OrderApiController {
 
         return all;
     }
+
+    /**
+     * V2. 엔티티를 조회해서 DTO 로 변환(fetch join 사용 x)
+     * - 트랜잭션 안에서 지연 로딩 필요
+     */
+
+
+    /**
+     * V3. 엔티티를 조회해서 DTO 로 변환(fetch join 사용 o)
+     * - 페이징 시에는 N 부분을 포기해야 함(대신에 batch fetch size? 옵션 주면 N -> 1 쿼리로 변경 가능)
+     */
+
+    /**
+     * V4. JPA 에서 DTO 로 바로 조회, 컬렉션 N 조회 (1 + N Query)
+     * - 페이징 가능
+     */
+
+    /**
+     * V5. JPA 에서 DTO 로 바로 조회, 컬렉션 1 조회 최적화 버전 (1 + 1 Query)
+     * - 페이징 가능
+     */
+
+    /**
+     * V6. JPA 에서 DTO 바로 조회, 플랫 데이터(1 Query)
+     * - 페이징 불가능...
+     */
 }
